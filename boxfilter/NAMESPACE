@@ -1,7 +1,0 @@
-exportPattern("^[[:alpha:]]+")
-
-import(gridExtra)
-import(ggplot2)
-
-importFrom("graphics", "hist")
-importFrom("stats", "na.omit")
