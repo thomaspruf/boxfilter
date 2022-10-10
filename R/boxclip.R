@@ -30,7 +30,7 @@ boxclip <- function(x,y,clipit=NULL,QI=NULL,width=NULL, height=NULL, miny=10, pl
          test<-ndat$y[sect]
          nei<-sum(test>=lo & test<=hi,na.rm=T)
          all=length(ndat$y[sect])
-         ndat$neighbors[i]<-nei/all#(2*width+1)
+         ndat$neighbors[i]<-nei/all
       }
   }
 
