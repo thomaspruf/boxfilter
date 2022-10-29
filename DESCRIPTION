@@ -1,8 +1,8 @@
 Package: boxfilter
 Type: Package
 Title: Filter Noisy Data
-Version: 1.0
-Date: 2022-09-20
+Version: 0.1
+Date: 2022-10-29
 Author: Thomas Ruf
 Maintainer: Thomas Ruf <Thomas.P.Ruf@me.com>
 Description: Noise filter based on determining the proportion of neighboring points.
