@@ -5,3 +5,6 @@ import(ggplot2)
 
 importFrom("graphics", "hist")
 importFrom("stats", "na.omit")
+importFrom("utils", "write.csv")
+
+S3method(summary,boxclip)
