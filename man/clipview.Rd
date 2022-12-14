@@ -1,6 +1,6 @@
 \name{clipview}
 \alias{clipview}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
 Get View Of Different clipit  Values
 }
@@ -10,7 +10,7 @@ Gives a view of the original data, a histogram of the neighbors, and results of 
 \usage{
 clipview(x, y, clipit = NULL,width = NULL, height = NULL, miny=10)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
   The x-axis of data, a datetime for example. Optional. If x=NULL x<-1:length(y) will be generated.
@@ -35,24 +35,26 @@ clipview(x, y, clipit = NULL,width = NULL, height = NULL, miny=10)
 Note that a sequence is required for clipit here, while a scalar is required in boxclip().
 }
 \value{
-  There is no return value.Six graphs are generated, four for each value of clipit.
+  There is no return value.Six graphs are generated, original, histogram, and four for each value of clipit.
 }
 \author{
 Thomas Ruf (thomas.p.ruf@me.com)
 }
 
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
 boxclip()
 }
 \examples{
-data("wb_year")
-x=wb_year$x
-y=wb_year$y
 
-clipview(x,y,clipit=seq(0.05,0.2,0.05))
+data("wb_year.RData")
+
+
+r=seq(1,54179,by=5)   %% make example faster
+
+x=wb_year$x[r]
+y=wb_year$y[r]
+
+clipview(x,y,clipit=seq(0.2,0.5,0.1))
 
 }
 

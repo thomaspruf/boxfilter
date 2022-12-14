@@ -1,6 +1,5 @@
 \name{boxclip}
 \alias{boxclip}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Boxfilter Main Function
 }
@@ -69,30 +68,26 @@ To store only filtered data, use e.g.:
   write.csv(data,file="myheartrates.csv")
 }
 
-
 \seealso{
 clipview
 }
 
 \examples{
-options(warn=-1)
 
 data("wb_month.RData")
 data ("ibex_hr.RData")
 
-
 x=wb_month$x
 y=wb_month$hr
-qual=wb_month$QI
-
-boxclip(x,y,QI=qual)
-
-boxclip(x,y,clipit=0.25,width=15, histo=TRUE)
 
 
-boxclip(ibex_hr$Time,ibex_hr$Heartrate,0.45)
+myclip=boxclip(x,y,clipit=0.25,width=15, histo=TRUE)
+summary(myclip)
 
-options(warn=1)
+r=seq(1,28400,by=4) %% to make the example faster
+myclip=boxclip(ibex_hr$Time[r],ibex_hr$Heartrate[r],0.45)
+summary(myclip)
+store(myclip)
 }
 
  \keyword{ "manip" }
