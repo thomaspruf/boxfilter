@@ -1,7 +1,7 @@
 
 boxclip <- function(x,y,clipit=NULL,QI=NULL,width=NULL, height=NULL, miny=10, plotit=TRUE,histo=FALSE)  {
 
-  # small values of clipit are more tolerant
+  # small values of clipit (0-1) are more tolerant
 
   filtered<-neighbors<-NULL
 
@@ -76,9 +76,7 @@ boxclip <- function(x,y,clipit=NULL,QI=NULL,width=NULL, height=NULL, miny=10, pl
    }
 
     if (histo==FALSE){
-        options(warn=-1)
         grid.arrange(p1,p2,ncol=1)
-        options(warn=1)
 
     } else {
         p3<-  ggplot( ndat, aes(neighbors))+geom_histogram(closed="left",bins=10,color="blue",fill="gray80")
@@ -86,24 +84,16 @@ boxclip <- function(x,y,clipit=NULL,QI=NULL,width=NULL, height=NULL, miny=10, pl
         p3<-p3 + scale_y_log10()
         p3<-p3+theme_gray(18)
         if (!is.null(QI)) p3<-p3+theme(plot.margin=margin(t = 0, r = 85, b = 0, l = 0, unit = "pt"))
-        options(warn=-1)
         grid.arrange(p1,p2,p3,ncol=1)
-        options(warn=1)
     }
   }
 
-  cat("clipit :",clipit, "\n")
-  cat("width :",width,"\n")
-  cat("height :",height,"\n")
-  cat("\n")
   full<-length(na.omit(ndat$y))
   rest=length(na.omit(ndat$filtered))
-  cat("Full w/o NA: ",full,"\n")
-  cat("Remaining  : ",rest,"\n")
-  rest<-round(abs(rest/full*100),1)
-  cat (rest,"% values remain \n")
 
-  invisible (list(x=x,y=y,filtered=ndat$filtered, neighbors=ndat$neighbors))
+  clipout=(list(x=x,y=y,filtered=ndat$filtered, neighbors=ndat$neighbors,clipit=clipit, width=width,height=height,full=full, rest=rest))
 
+  class(clipout)="boxclip"
+  invisible(clipout)
 }
 
