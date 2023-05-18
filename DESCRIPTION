@@ -1,8 +1,8 @@
 Package: boxfilter
 Type: Package
 Title: Filter Noisy Data
-Version: 0.1
-Date: 2022-11-03
+Version: 0.2
+Date: 2022-05-20
 Authors@R: c(
     person(given="Thomas", family="Ruf", email= "Thomas.P.Ruf@me.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9235-7079")))
