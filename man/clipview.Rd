@@ -54,7 +54,7 @@ r=seq(1,54179,by=5)   %% make example faster
 x=wb_year$x[r]
 y=wb_year$y[r]
 
-clipview(x,y,clipit=seq(0.2,0.5,0.1))
+clipview(x,y,clipit=seq(0.2,0.5,0.1), miny=10)
 
 }
 
