@@ -5,7 +5,7 @@ For more information see the vignette.
 To install, open RStudio and type in the console window:
 
 install.packages (devtools)  
-install_github ("thomaspruf/boxfilter")  
+install_github ("thomaspruf/boxfilter", build=F)  
 library (boxfilter)  
 
 
