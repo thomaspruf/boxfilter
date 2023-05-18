@@ -16,30 +16,38 @@ Thomas Ruf
 ----------
 Veterinary University Vienna, Austria
 -------------------------------------
-Heart rates and other signals recorded in humans and animals often contain noise. This can be removed by hand or various filters. Filter may be based on signal characteristics or on limiting the signal to certain frequencies. An alternative is boxfilter. The filter was designed to assign each data point a weight based on the number of neighboring points. This was implemented by looping through all data points and counting neighbors within a rectangular frame, adjustable in width and height and centered on a focal data point. It weighs all data points in a given data set according to the proportion of neighbors and retains only those points with high proportions.
+Heart rates and other signals recorded in humans and animals often contain noise. This can be removed by hand or various filters. Filters may be based on signal characteristics or on limiting the signal to certain frequencies. An alternative is boxfilter. The filter was designed to assign each data point a weight based on the number of neighboring points. This principle is based on genuine points surrounding the focal point, whether the data are normally distributed or show positive autocorrelation.This was implemented by looping through all data points and counting neighbors within a rectangular frame, adjustable in width and height and centered on a focal data point. It weighs all data points in a given data set according to the proportion of neighbors and retains only those points with high proportions.
 \newline
 \newline
-Thus, like the human eye, this filter prefers points within a dense band and rejects isolated values. It turns out that the exact size of the box around each point is not crucial. Various specifications of its width and height lead to approximately the same result. The choice of  the clip-off value beyond which data points are discarded, is critical however. All three parameters can be computed automatically. Use like this:
+The data, which may be stored in a comma separated file (.csv) consist of a time (x) a heartrate (y) and possibly a quality index (QI). They can be read like this (assuming HRS.csv is in the present directory):
+```{r,eval = FALSE}
+dat=read.csv ("HRS.csv")
+head(dat) # shows the first lines
+```
+boxfilter prefers points within a dense band and rejects isolated values. The filter result depends on both window size and the choice of  the clip-off value beyond which data points are discarded. We recommend to keep the window size (width and height) fixed while varying clipit, the cutoff value. by default, th window is quadratic. All three parameters can be computed automatically. For this purpose use like this:
 ```{r,eval = FALSE}
 library(boxfilter)
+x=dat$x
+y=dat$hr
+QT=dat$QT
 boxclip(x,y,QI)
 ```
 \begin{figure}
 \begin{center}
-  \includegraphics [width=0.65\columnwidth]{/Users/ruf/FilesR/R_Projects/Box/wb_yearclip-comp.jpg}
+  \includegraphics [width=0.55\columnwidth]{wb_yearclip-comp.jpg}
   \caption{Yearly heartrate of a wild boar.Upper graph: original points; lower graph: filtered points.}
 \end{center}
 \end{figure}
-Here, the shades of blue in the upper graph indicate signal quality, as provided by the  logger's manufacturer. These is not needed by boxclip() and is in fact ignored in computations. The quality is merely shown in the graph of original points to illustrate that high values of the heart rate, as they occur in summer, ar very unreliable. Not surprisingly then, in filtered points, with filtering based on their density, there is even a trough in heart rates in summer and a peak in winter, in wild boar[1}. This is shown in the filtered signal in the lower graph (red points). The value for clipit (here 0.045) was automatically computed, since it was omitted. In this case, boxclip() even discards points that were considered "good quality" (QI 0-1; dark blue) by the manufacturer.
+Here, the shades of blue in the upper graph indicate signal quality, as provided by the  logger's manufacturer. These is not needed by boxclip() and is in fact ignored in computations. The quality is merely shown in the graph of original points to illustrate that high values of the heart rate, as they occur in summer, are very unreliable. Not surprisingly then, in filtered points, with filtering based on their density, there is even a drop in heart rates in summer and a peak in winter, in wild boar[1]. This is shown in the filtered signal in the lower graph (red points). The value for clipit (here 0.45) was automatically computed, since it was omitted. In this case, boxclip() even discards points that were considered "good quality" (QI 0-1; dark blue) by the manufacturer. The default window height is half of th heat rate mean. The default width is half of the height, which is only half of th window height.
 \newline
 \newline
 It may seem that the boxfilter is only suited to remove white noise surrounding the data. This is not the case. Sometimes the genuine signal may contain "bands" of noise. For example, a heart rate logger based on the acoustics of the heart beat in ruminants [2], occasionally picks up noise corresponding to approximately 110 bpm. An example of year-round record in a Capricorn is shown in the next figure. It was generated with:
 ```{r,eval = FALSE}
-boxclip(x,y,clipit=0.055)
+boxclip(x,y,clipit=0.65)
 ```
 \begin{figure}
 \begin{center}
-  \includegraphics [width=0.85\columnwidth]{/Users/ruf/FilesR/R_Projects/Box/ibex_yearclip_055-comp.jpg}
+  \includegraphics [width=0.55\columnwidth]{ibex.jpeg}
   \caption{Yearly heartrate of an ibex.Upper graph: original points; lower graph: filtered points.}
 \end{center}
 \end{figure}
@@ -50,11 +58,11 @@ clipview (x,y,clipit=seq(0.05, 0.2 ,by=0.05))
 ```
 \begin{figure}
 \begin{center}
-  \includegraphics [width=0.90\columnwidth]{/Users/ruf/FilesR/R_Projects/Box/wb_viemonth-01_02-comp.jpg}
-  \caption{Result of trying clipview with four values of clipit ranging from 0.05 to 0.2.}
+  \includegraphics [width=0.55\columnwidth]{wb_month.jpeg}
+  \caption{Result of trying clipview with four values of clipit ranging from 0.1 to 0.7.}
 \end{center}
 \end{figure}
-A clipit value of 0 leaves the data unchanged. Larger values of clipit remove more original points. Use clipit=c(0.05,0.1,0.4,0.5) for irregular increments. The resulting figure also shows a histogram of the proportion of neighbors surrounding a point. The histogram may be helpful in determining clipit. In the automatic calculation the value of clipit corresponds to the first trough >0 in the histogram. Of course, boxfilter may be applied also to other measures than heart rate that do not change instantaneously, such as temperature or blood pressure.
+A clipit value of 0 leaves the data unchanged. Larger values of clipit remove more original points. Use e.g. clipit=c(0.1,0.3,0.5,0.7) for regular increments. The figure also shows a histogram of the proportion of neighbors surrounding a point. The histogram may be helpful in determining clipit. In the automatic calculation the value of clipit corresponds to the first drop >0 in the histogram. Of course, boxfilter may be applied also to other measures than heart rate that do not change instantaneously, such as temperature or blood pressure. For an example on the time spent is bed during a sleep-study (https://www.kaggle.com/datasets/danagerous/sleep-data) see last example of boxclip.
 \newpage
 To store the results of boxclip() use:
 ```{r,eval = FALSE}
