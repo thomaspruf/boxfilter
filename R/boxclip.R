@@ -1,13 +1,21 @@
 
-boxclip <- function(x,y,clipit=NULL,QI=NULL,width=NULL, height=NULL, miny=10, plotit=TRUE,histo=FALSE)  {
+boxclip <- function(x=NULL,y,clipit=NULL,QI=NULL,width=NULL, height=NULL, miny=min(y,na.rm=TRUE), maxy=max(y,na.rm=TRUE), plotit=TRUE,histo=FALSE)  {
 
   # small values of clipit (0-1) are more tolerant
 
   filtered<-neighbors<-NULL
 
   if (is.null(x)) x<-1:length(y)
-  if (is.null(width))  width<-floor(length(x)*0.01)
-  if (is.null(height)) height<-floor( mean(y,na.rm=T)/4)
+  if (is.null(height)) height=round(mean(y,na.rm=T)/2)
+  if (is.null(width))  width<-height*2; height=round(width/2)
+
+  x=subset(x,y>=miny)
+  y=subset(y,y>=miny)
+
+  x=subset(x,y<=maxy)
+  y=subset(y,y<=maxy)
+
+  if (plotit==TRUE) showdata(x,y)
 
   dat=data.frame(x,y)
   n=dim(dat)[1]

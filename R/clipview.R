@@ -1,9 +1,10 @@
-clipview<-function(x,y,clipit=NULL, width=NULL, height= NULL, miny=10){
+clipview<-function  (x=NULL,y,clipit=NULL,width=NULL, height=NULL, miny=min(y,na.rm=TRUE), maxy=max(y,na.rm=TRUE),plotit=FALSE){
 
   filtered<-neighbors<-NULL
+
   if (is.null(x)) x<-1:length(y)
-  if (is.null(width))  width<-floor(length(x)*0.01)
-  if (is.null(height)) height<-floor( mean(y,na.rm=T)/4)
+  if (is.null(height)) height=round(mean(y,na.rm=T)/2)
+  if (is.null(width))  width<-height*2; height=round(width/2)
 
   ndat<-boxclip(x=x,y=y, clipit=NULL, width=width, height= height,plotit=FALSE)
   dat<-data.frame(x=ndat$x,y=ndat$y,neighbors=ndat$neighbors)
