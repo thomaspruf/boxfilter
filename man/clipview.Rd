@@ -28,8 +28,12 @@ clipview(x, y, clipit = NULL,width = NULL, height = NULL, miny=10)
   Optional. The height of the box. If height is omitted it will be generated from floor(mean(y,na.rm=T)/4).
 }
   \item{miny}{
-  The minimum y-value expected. Defaults to 10. Anything below miny is discarded.
+  The minimum y-value expected. Anything below miny is discarded.
 }
+  \item{maxy}{
+  The minimum y-value expected. Anything abov miny is discarded.
+}
+
 }
 \details{
 Note that a sequence is required for clipit here, while a scalar is required in boxclip().

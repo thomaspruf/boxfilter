@@ -2,7 +2,7 @@
 \alias{showdata}
 
 \title{
-Boxfiler function
+Boxfilter function
 }
 \description{
 Shows a graph of the data and its change over time.Called by boxclip()
@@ -13,7 +13,7 @@ showdata(x,y)
 
 
 \details{
-Asks the user whether to contnue or not.Continue only if xouu want ponis to be deleted
+Asks the user whether to continue or not.Continue only if you want points to be deleted
 }
 
 \arguments{
