@@ -6,7 +6,7 @@ clipview<-function  (x=NULL,y,clipit=NULL,width=NULL, height=NULL, miny=min(y,na
   if (is.null(height)) height=round(mean(y,na.rm=T)/2)
   if (is.null(width))  width<-height*2; height=round(width/2)
 
-  ndat<-boxclip(x=x,y=y, clipit=NULL, width=width, height= height,plotit=FALSE)
+  ndat<-boxclip(x=x,y=y, clipit=NULL, width=width, height= height,miny=miny,maxy=maxy,plotit=FALSE)
   dat<-data.frame(x=ndat$x,y=ndat$y,neighbors=ndat$neighbors)
 
   if (is.null(clipit)) clipit<-seq(0.1,0.5,by=0.1)
