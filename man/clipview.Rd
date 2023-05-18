@@ -46,7 +46,7 @@ boxclip()
 }
 \examples{
 
-data("wb_year.RData")
+data("wb_year")
 
 
 r=seq(1,54179,by=5)   %% make example faster

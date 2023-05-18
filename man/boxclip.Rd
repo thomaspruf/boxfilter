@@ -74,20 +74,26 @@ clipview
 
 \examples{
 
-data("wb_month.RData")
-data ("ibex_hr.RData")
+data("wb_month")
+data("ibex_hr")
 
 x=wb_month$x
 y=wb_month$hr
 
 
-myclip=boxclip(x,y,clipit=0.25,width=15, histo=TRUE)
+myclip=boxclip(x,y, histo=TRUE)
 summary(myclip)
 
 r=seq(1,28400,by=4) %% to make the example faster
-myclip=boxclip(ibex_hr$Time[r],ibex_hr$Heartrate[r],0.45)
+myclip=boxclip(ibex_hr$Time[r],ibex_hr$Heartrate[r],0.65)
 summary(myclip)
-store(myclip)
+#store(myclip)
+
+
+data("sleepduration")
+Date=as.POSIXct(sleepduration$Date)
+Duration=as.numeric(sleepduration$Bedtime)
+boxclip(Date,Duration,miny=0)
 }
 
  \keyword{ "manip" }
